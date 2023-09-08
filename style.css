@@ -33,9 +33,7 @@ body {
     justify-content: center;
     align-items: center;
     margin: 32px auto;
-
 }
-
 
 .operation-container {
     width: 350px
@@ -55,16 +53,14 @@ button {
     font-weight: 700;
 }
 
-.operation:hover, .digit:hover {
+.operation:hover, .digit:hover, .unique:hover {
     background-color: #e2e2e2;
  
 }
-.operation:active, .digit:active {
+.operation:active, .digit:active, .unique:active {
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.5);
     z-index: 1;
 } 
-
-
 
 .unique {
     background-color: #d84837;
