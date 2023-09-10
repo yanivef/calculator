@@ -10,6 +10,7 @@ const calculationObj = {}
 
 clear.addEventListener('click', () => {
     display.textContent = ''
+    calculationObj.result = undefined
     resetObj()
 })
 
@@ -18,26 +19,22 @@ digitsArr.forEach(digit => digit.addEventListener('click', () => {
         display.textContent = ''
     display.textContent += digit.textContent
     display.textContent = display.textContent.replace(/[+-/\*\*/]/, '')
-    if (calculationObj.opr === undefined){
-        calculationObj.num1 += digit.textContent // converting to Number type
-        calculationObj.num1 = calculationObj.num1.replace('undefined', '')
-    }
-    
-    else {
-        calculationObj.num2 += digit.textContent
-        calculationObj.num2 = calculationObj.num2.replace('undefined', '')
-    } 
+    if (calculationObj.opr === undefined)
+        calculationObj.num1 = concat(calculationObj.num1, digit) 
+
+    else 
+        calculationObj.num2 = concat(calculationObj.num2, digit)          
 }))
 
 operationsArr.forEach(operation => operation.addEventListener('click', () => {
-    if(calculationObj.num1 === undefined)
-        return
-    if(calculationObj.opr !== undefined)
-        display.textContent = 'ERROR - ONE OPERATOR AT A TIME'
-    else {
-        calculationObj.opr = operation.textContent
-        display.textContent = operation.textContent
+    if(calculationObj.result !== undefined) {
+        calculationObj.num1 = calculationObj.result
     }
+    if(calculationObj.num1 === undefined || calculationObj.opr !== undefined)
+        return
+
+    calculationObj.opr = operation.textContent
+    display.textContent = operation.textContent  
 }))
 
 
@@ -47,8 +44,10 @@ equal.addEventListener('click', () => {
     
     if(operate(calculationObj) === 'MATH ERROR')
         display.textContent = 'MATH ERROR'
-    else 
+    else {
         display.textContent = `${calculationObj.num1} ${calculationObj.opr} ${calculationObj.num2} = ${operate(calculationObj)}`
+        calculationObj.result = operate(calculationObj)      
+    }
     resetObj()
 })
 
@@ -91,4 +90,9 @@ function divide(num1, num2) {
 
 function multiply(num1,num2){
     return num1*num2
+}
+
+function concat(num, dig) { 
+    num += dig.textContent
+    return num = num.replace('undefined', '')
 }
