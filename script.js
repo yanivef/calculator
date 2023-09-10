@@ -8,15 +8,16 @@ const equal = document.querySelector('.equal')
 const calculationObj = {}
 
 
-clear.addEventListener('click', () => {
-    display.textContent = ''
-    calculationObj.result = undefined
-    resetObj()
-})
+clear.addEventListener('click', clearDisplay)
 
 digitsArr.forEach(digit => digit.addEventListener('click', () => {
     if(calculationObj.result !== undefined && calculationObj.num1 === undefined)
         return
+    if(display.textContent.length > 50) {
+        alert('Too many digits! overflow exception')
+        return clearDisplay()
+    }
+
     display.textContent += digit.textContent
 
     if (calculationObj.opr === undefined)
@@ -91,4 +92,10 @@ function multiply(num1,num2){
 function concat(num, dig) { 
     num += `${dig.textContent}`
     return num = num.replace('undefined', '')
+}
+
+function clearDisplay(){
+    display.textContent = ''
+    calculationObj.result = undefined
+    resetObj()
 }
