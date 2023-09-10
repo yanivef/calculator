@@ -15,15 +15,14 @@ clear.addEventListener('click', () => {
 })
 
 digitsArr.forEach(digit => digit.addEventListener('click', () => {
-    if(calculationObj.num1 === undefined)
-        display.textContent = ''
+    if(calculationObj.result !== undefined && calculationObj.num1 === undefined)
+        return
     display.textContent += digit.textContent
-    display.textContent = display.textContent.replace(/[+-/\*\*/]/, '')
-    if (calculationObj.opr === undefined)
-        calculationObj.num1 = concat(calculationObj.num1, digit) 
 
+    if (calculationObj.opr === undefined)
+        calculationObj.num1 = concat(calculationObj.num1, digit)
     else 
-        calculationObj.num2 = concat(calculationObj.num2, digit)          
+        calculationObj.num2 = concat(calculationObj.num2, digit)         
 }))
 
 operationsArr.forEach(operation => operation.addEventListener('click', () => {
@@ -34,7 +33,7 @@ operationsArr.forEach(operation => operation.addEventListener('click', () => {
         return
 
     calculationObj.opr = operation.textContent
-    display.textContent = operation.textContent  
+    display.textContent += ` ${operation.textContent} `  
 }))
 
 
@@ -73,7 +72,6 @@ function operate(obj) {
     }
 }
 
-
 function add(num1, num2) {
     return num1 + num2
 }
@@ -83,9 +81,7 @@ function subtract(num1, num2) {
 } 
 
 function divide(num1, num2) {
-    if(!num2)
-        return 'MATH ERROR' // attempt to divide by zero
-    return num1/num2
+    return !num2 ? 'MATH ERROR' : num1/num2 // attempt to divide by zero
 }
 
 function multiply(num1,num2){
@@ -93,6 +89,6 @@ function multiply(num1,num2){
 }
 
 function concat(num, dig) { 
-    num += dig.textContent
+    num += `${dig.textContent}`
     return num = num.replace('undefined', '')
 }
